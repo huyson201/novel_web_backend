@@ -1,0 +1,33 @@
+###
+@baseURL=http://localhost:3001
+
+### @name defaul
+GET {{baseURL}}
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyYTU5NDBjMjg5NjBkMWNjMGRlMTAiLCJlbWFpbCI6Imh1eXNvbjIwMUBnbWFpbC5jb20iLCJpYXQiOjE2NTE2ODE1NzQsImV4cCI6MTY1MTY4ODc3NH0.gLY57jNNaJTO8jzS0FCtyA6rZEXFqRN7BNxkCrH4dcw
+
+
+### @name login
+POST {{baseURL}}/login
+Content-Type: application/json
+
+{
+    "email": "huyson201@gmail.com",
+    "password": "asdasd123"
+}
+
+### @name register
+POST {{baseURL}}/register
+Content-Type: application/json
+
+{
+    "firstName": "Huy",
+    "lastName": "Son",
+    "email": "huyson201@gmail.com",
+    "password": "asdasd123"
+}
+
+### @name logout
+POST {{baseURL}}/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyYTU5NDBjMjg5NjBkMWNjMGRlMTAiLCJlbWFpbCI6Imh1eXNvbjIwMUBnbWFpbC5jb20iLCJpYXQiOjE2NTE2ODE1NzQsImV4cCI6MTY1MTY4ODc3NH0.gLY57jNNaJTO8jzS0FCtyA6rZEXFqRN7BNxkCrH4dcw
