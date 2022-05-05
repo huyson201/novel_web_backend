@@ -7,16 +7,16 @@ export const login = async (req, res, next) => {
         // get user with email and check exist
         let user = await User.findOne({ email: data.email })
         if (!user) return next(createError(400, 'email not exist!'))
-        
+
         // verify password
         let checkPassword = user.comparePassword(data.password, user.password)
         if (!checkPassword) return next(createError(400, 'password not match!'))
 
         // generate token
-        let token = user.generateToken({ _id: user._id, email: user.email })
-        let refreshToken = user.generateRefreshToken({ _id: user._id, email: user.email })
+        let token = user.generateToken()
+        let refreshToken = user.generateRefreshToken()
         user.refreshToken = refreshToken
-        
+
         await user.save()
         return res.status(200).json({
             data: {
@@ -50,10 +50,6 @@ export const register = async (req, res, next) => {
         user.name.first = firstName
         user.name.last = lastName
 
-        // validate email
-        let validate = user.validateSync()
-        if (validate && validate.errors['email']) return next(createError(400, validate.errors['email']))
-
         // save value
         await user.save()
         return res.status(201).send('user created!')
@@ -79,3 +75,21 @@ export const logout = async (req, res, next) => {
     }
 }
 
+export const refreshAccessToken = async (req, res, next) => {
+    let { refreshToken } = req.body
+    try {
+        let user = await User.findOne({ refreshToken })
+        if (!user) return next(createError(404, 'refreshToken not exist'))
+        let accessToken = user.generateToken()
+        return res.status(200).json({
+            data: {
+                accessToken
+            }
+        })
+
+    } catch (error) {
+        return next(createError(error.status || 500, error.message))
+    }
+
+
+}

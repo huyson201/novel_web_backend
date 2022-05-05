@@ -31,3 +31,16 @@ Content-Type: application/json
 POST {{baseURL}}/logout
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyYTU5NDBjMjg5NjBkMWNjMGRlMTAiLCJlbWFpbCI6Imh1eXNvbjIwMUBnbWFpbC5jb20iLCJpYXQiOjE2NTE2ODE1NzQsImV4cCI6MTY1MTY4ODc3NH0.gLY57jNNaJTO8jzS0FCtyA6rZEXFqRN7BNxkCrH4dcw
+
+### @name refreshToken
+POST {{baseURL}}/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyYTU5NDBjMjg5NjBkMWNjMGRlMTAiLCJlbWFpbCI6Imh1eXNvbjIwMUBnbWFpbC5jb20iLCJpYXQiOjE2NTE3NTU1MTN9.eihuBepCbp7dAOKUxzyP_EGUYCcyeTzs7EKUN2rbIIM"
+}
+
+### @name getProfile
+GET {{baseURL}}/profile
+Content-Type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyYTU5NDBjMjg5NjBkMWNjMGRlMTAiLCJlbWFpbCI6Imh1eXNvbjIwMUBnbWFpbC5jb20iLCJpYXQiOjE2NTE3NjE0NTYsImV4cCI6MTY1MTc2ODY1Nn0.iumsWrNqF7-_vjkMe3NSF2DvVhCFj5LbVBRq6G8GWjA

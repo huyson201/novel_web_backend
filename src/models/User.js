@@ -46,7 +46,21 @@ UserSchema.pre('save', function (next) {
 })
 
 UserSchema.methods.comparePassword = comparePassword
-UserSchema.methods.generateToken = generateToken
-UserSchema.methods.generateRefreshToken = generateRefreshToken
+UserSchema.methods.generateToken = function () {
+    let token = generateToken({ _id: this._id, email: this.email })
+    return token
+}
+
+UserSchema.methods.generateRefreshToken = function () {
+    let token = generateRefreshToken({ _id: this._id, email: this.email })
+    return token
+}
+
+
+UserSchema.methods.toJson = function () {
+
+    return { _id: this._id, email: this.email, name: this.name, coins: this.coins, createdAt: this.createdAt, updatedAt: this.updatedAt }
+}
+
 
 export default mongoose.model('Users', UserSchema)
