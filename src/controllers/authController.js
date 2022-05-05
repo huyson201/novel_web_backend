@@ -4,14 +4,19 @@ import createError from 'http-errors'
 export const login = async (req, res, next) => {
     let data = req.body
     try {
+        // get user with email and check exist
         let user = await User.findOne({ email: data.email })
         if (!user) return next(createError(400, 'email not exist!'))
+        
+        // verify password
         let checkPassword = user.comparePassword(data.password, user.password)
         if (!checkPassword) return next(createError(400, 'password not match!'))
 
+        // generate token
         let token = user.generateToken({ _id: user._id, email: user.email })
         let refreshToken = user.generateRefreshToken({ _id: user._id, email: user.email })
         user.refreshToken = refreshToken
+        
         await user.save()
         return res.status(200).json({
             data: {
@@ -49,6 +54,7 @@ export const register = async (req, res, next) => {
         let validate = user.validateSync()
         if (validate && validate.errors['email']) return next(createError(400, validate.errors['email']))
 
+        // save value
         await user.save()
         return res.status(201).send('user created!')
     } catch (error) {
