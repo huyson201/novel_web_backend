@@ -21,8 +21,7 @@ POST {{baseURL}}/register
 Content-Type: application/json
 
 {
-    "firstName": "Huy",
-    "lastName": "Son",
+    "name": "huy son",
     "email": "huyson201@gmail.com",
     "password": "asdasd123"
 }
@@ -44,3 +43,35 @@ Content-Type: application/json
 GET {{baseURL}}/profile
 Content-Type: application/json
 Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjcyYTU5NDBjMjg5NjBkMWNjMGRlMTAiLCJlbWFpbCI6Imh1eXNvbjIwMUBnbWFpbC5jb20iLCJpYXQiOjE2NTE3NjE0NTYsImV4cCI6MTY1MTc2ODY1Nn0.iumsWrNqF7-_vjkMe3NSF2DvVhCFj5LbVBRq6G8GWjA
+
+### @name getCategoires
+GET  {{baseURL}}/categories
+Content-Type: application/json
+
+### @name createCategoires
+POST  {{baseURL}}/categories
+Content-Type: application/json
+
+### @name getBook
+GET {{baseURL}}/books?page=1
+
+### @name getBookBySlug
+GET {{baseURL}}/books/bat-dau-ban-thuong-100-trieu-cai-mang-ban-dich
+
+### @name getBook'sCategories
+GET {{baseURL}}/books/bat-dau-ban-thuong-100-trieu-cai-mang-ban-dich/categories
+
+### @name getChaptersBySlug
+GET {{baseURL}}/books/bat-dau-ban-thuong-100-trieu-cai-mang-ban-dich/chapters?page=2&select=_id:title:number
+
+### @name getChapterBySlug
+GET {{baseURL}}/books/bat-dau-ban-thuong-100-trieu-cai-mang-ban-dich/chapters/
+
+
+### @name updateBookBySlug
+PUT {{baseURL}}/books/bat-dau-ban-thuong-100-trieu-cai-mang-ban-dich
+Content-Type: application/json
+
+{
+    "bookCate": "62776366301f51f3bea80db4"
+}

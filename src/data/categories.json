@@ -1,0 +1,545 @@
+[{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd63"
+  },
+  "name": "Dị Năng",
+  "slug": "di-nang",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd64"
+  },
+  "name": "Hài Hước",
+  "slug": "hai-huoc",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd65"
+  },
+  "name": "Hiện Đại",
+  "slug": "hien-dai",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd66"
+  },
+  "name": "Cơ trí",
+  "slug": "co-tri",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd67"
+  },
+  "name": "Huyền Huyễn",
+  "slug": "huyen-huyen",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd68"
+  },
+  "name": "Ngôn Tình",
+  "slug": "ngon-tinh",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd69"
+  },
+  "name": "Lịch Sử",
+  "slug": "lich-su",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd6a"
+  },
+  "name": "Trọng Sinh",
+  "slug": "trong-sinh",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd6b"
+  },
+  "name": "Đô thị dị năng",
+  "slug": "do-thi-di-nang",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd6c"
+  },
+  "name": "Chiến Tranh",
+  "slug": "chien-tranh",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd6d"
+  },
+  "name": "Hư nghĩ võng du",
+  "slug": "hu-nghi-vong-du",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd6e"
+  },
+  "name": "Quân Sự",
+  "slug": "quan-su",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd6f"
+  },
+  "name": "Sảng văn",
+  "slug": "sang-van",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd70"
+  },
+  "name": "Dị Giới",
+  "slug": "di-gioi",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd71"
+  },
+  "name": "Quan Trường",
+  "slug": "quan-truong",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd72"
+  },
+  "name": "Sắc Hiệp",
+  "slug": "sac-hiep",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd73"
+  },
+  "name": "Đô Thị",
+  "slug": "do-thi",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd74"
+  },
+  "name": "Ngược",
+  "slug": "nguoc",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd75"
+  },
+  "name": "Mạt Thế",
+  "slug": "mat-the",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd76"
+  },
+  "name": "Tùy thân",
+  "slug": "tuy-than",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd77"
+  },
+  "name": "Đồng Nhân",
+  "slug": "dong-nhan",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd78"
+  },
+  "name": "Vô sỉ",
+  "slug": "vo-si",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd79"
+  },
+  "name": "Phản Phái",
+  "slug": "phan-phai",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd7a"
+  },
+  "name": "Linh Dị",
+  "slug": "linh-di",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd7b"
+  },
+  "name": "Khoa Huyễn",
+  "slug": "khoa-huyen",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd7c"
+  },
+  "name": "Hồng Hoang",
+  "slug": "hong-hoang",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd7d"
+  },
+  "name": "Võng Du",
+  "slug": "vong-du",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd7e"
+  },
+  "name": "Hệ Thống",
+  "slug": "he-thong",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd7f"
+  },
+  "name": "Xuyên Không",
+  "slug": "xuyen-khong",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd80"
+  },
+  "name": "Trinh Thám",
+  "slug": "trinh-tham",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd81"
+  },
+  "name": "Tiên Hiệp",
+  "slug": "tien-hiep",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6276bdd6b624177e66fccd82"
+  },
+  "name": "Điền Văn",
+  "slug": "dien-van",
+  "__v": 0,
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1651851996423"
+    }
+  }
+}]

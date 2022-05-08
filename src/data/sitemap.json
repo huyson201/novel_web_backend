@@ -1,0 +1,92 @@
+{
+  "_id": "tienvuc",
+  "startUrl": ["https://tienvuc.xyz/danh-sach/truyen-moi"],
+  "selectors": [
+    {
+      "delay": 0,
+      "id": "BookLinks",
+      "multiple": true,
+      "parentSelectors": ["_root"],
+      "selector": ".title a",
+      "type": "SelectorLink"
+    },
+    {
+      "delay": 0,
+      "id": "BookImg",
+      "multiple": false,
+      "parentSelectors": ["BookLinks"],
+      "selector": "img.book-cover",
+      "type": "SelectorImage"
+    },
+    {
+      "delay": 0,
+      "id": "bookTitle",
+      "multiple": false,
+      "parentSelectors": ["BookLinks"],
+      "regex": "",
+      "selector": ".is-three-quarters-desktop h1",
+      "type": "SelectorText"
+    },
+    {
+      "delay": 0,
+      "id": "BookCates",
+      "multiple": true,
+      "parentSelectors": ["BookLinks"],
+      "selector": "a.tag",
+      "type": "SelectorLink"
+    },
+    {
+      "delay": 0,
+      "id": "bookAuthor",
+      "multiple": false,
+      "parentSelectors": ["BookLinks"],
+      "regex": "",
+      "selector": "div.subtitle.mb-1",
+      "type": "SelectorText"
+    },
+    {
+      "delay": 0,
+      "id": "bookTranslator",
+      "multiple": false,
+      "parentSelectors": ["BookLinks"],
+      "regex": "",
+      "selector": ".subtitle > a",
+      "type": "SelectorText"
+    },
+    {
+      "delay": 0,
+      "id": "bookDesc",
+      "multiple": false,
+      "parentSelectors": ["BookLinks"],
+      "regex": "",
+      "selector": "div.book-description-content",
+      "type": "SelectorText"
+    },
+    {
+      "delay": 0,
+      "id": "BookChapterLinks",
+      "multiple": true,
+      "parentSelectors": ["BookLinks"],
+      "selector": "a.panel-block",
+      "type": "SelectorLink"
+    },
+    {
+      "delay": 0,
+      "id": "bookChapterContent",
+      "multiple": false,
+      "parentSelectors": ["BookChapterLinks"],
+      "regex": "",
+      "selector": ".chapter-content div:nth-of-type(2)",
+      "type": "SelectorHTML"
+    },
+    {
+      "delay": 0,
+      "id": "chapterTitle",
+      "multiple": false,
+      "parentSelectors": ["BookChapterLinks"],
+      "regex": "",
+      "selector": "h1",
+      "type": "SelectorText"
+    }
+  ]
+}

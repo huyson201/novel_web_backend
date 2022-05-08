@@ -1,26 +1,17 @@
 import mongoose from "mongoose";
 import passwordGenerator, { comparePassword } from "~/helpers/passwordGenerator";
-import validator from 'validator'
 import { generateRefreshToken, generateToken } from "~/helpers/generateToken";
 
 const Schema = mongoose.Schema
-const ObjectId = Schema.ObjectId
 
-const emailValidator = (v) => {
-    return validator.isEmail(v)
-}
 
 
 const UserSchema = new Schema({
-    name: {
-        first: String,
-        last: String,
-    },
+    name: { type: String, required: true },
     email: {
         type: String,
         required: true,
-        index: { unique: true },
-        validate: [emailValidator, 'invalid email']
+        index: { unique: true }
     },
     password: { type: String, required: true },
     coins: { type: Number, default: 1200 },
@@ -29,9 +20,6 @@ const UserSchema = new Schema({
     updatedAt: { type: Date, default: () => Date.now() },
 })
 
-UserSchema.virtual('fullName').get(() => {
-    return this.name.first + ' ' + this.name.last
-})
 
 UserSchema.pre('updateOne', function (next) {
     this.updatedAt = Date.now()
@@ -57,10 +45,6 @@ UserSchema.methods.generateRefreshToken = function () {
 }
 
 
-UserSchema.methods.toJson = function () {
-
-    return { _id: this._id, email: this.email, name: this.name, coins: this.coins, createdAt: this.createdAt, updatedAt: this.updatedAt }
-}
 
 
 export default mongoose.model('Users', UserSchema)
