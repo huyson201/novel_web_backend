@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  uid       String   @unique @default(uuid())
+  name      String   @db.VarChar(250)
+  email     String   @unique
+  password  String   @db.VarChar(250)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  slug      String   @unique @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  books     Book[]
+
+  @@map("categories")
+}
+
+model Book {
+  id         Int        @id @default(autoincrement())
+  title      String     @db.VarChar(255)
+  slug       String     @unique @db.VarChar(255)
+  image      String     @default("")
+  desc       String     @default("")
+  author     String     @default("Đang cập nhật") @db.VarChar(100)
+  translator String     @default("Đang cập nhật") @db.VarChar(100)
+  state      String     @default("") @db.VarChar(100)
+  categories Category[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now()) @updatedAt
+  chapters   Chapter[]
+  Slider     Slider[]
+
+  @@map("books")
+}
+
+model Chapter {
+  id            Int      @id @default(autoincrement())
+  title         String   @db.VarChar(255)
+  chapterNumber Int
+  content       String   @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  bookId        Int
+  book          Book     @relation(fields: [bookId], references: [id])
+
+  @@map("chapters")
+}
+
+model Slider {
+  id        Int    @id @default(autoincrement())
+  bookId    Int
+  book      Book   @relation(fields: [bookId], references: [id])
+  bannerImg String @default("")
+}

@@ -1,0 +1,49 @@
+@baseUrl=http://localhost:3002
+@apiUrl=http://localhost:3002/api/v1
+### @name default
+GET {{baseUrl}}
+
+### @name login
+POST {{apiUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "huyson@gmail.com",
+    "password": "asdasd"
+}
+
+### @name register
+POST {{apiUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "name": "huyson",
+    "email": "huyson@gmail.com",
+    "password": "asdasd"
+}
+
+### @name logout
+POST {{apiUrl}}/auth/logout
+Content-Type: application/json
+
+
+### @name me
+GET  {{apiUrl}}/auth/me
+Content-Type: application/json
+
+### @name getCategories
+GET  {{apiUrl}}/categories
+Content-Type: application/json
+
+
+### @name getBooks
+GET  {{apiUrl}}/books?page=5
+Content-Type: application/json
+
+### @name getBookBySlug
+GET {{apiUrl}}/books/bat-dau-qua-manh-lam-sao-bay-gio-dich
+Content-Type: application/json
+
+### @name getSliders
+GET {{apiUrl}}/sliders/
+Content-Type: application/json
