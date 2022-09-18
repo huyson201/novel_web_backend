@@ -37,12 +37,20 @@ Content-Type: application/json
 
 
 ### @name getBooks
-GET  {{apiUrl}}/books?page=5
+GET  {{apiUrl}}/books
 Content-Type: application/json
 
 ### @name getBookBySlug
 GET {{apiUrl}}/books/bat-dau-qua-manh-lam-sao-bay-gio-dich
 Content-Type: application/json
+
+### @name getBookRecommend
+GET {{apiUrl}}/books/recommends
+Content-Type: application/json'
+
+### @name getBookPopular
+GET {{apiUrl}}/books/popular
+Content-Type: application/json'
 
 ### @name getSliders
 GET {{apiUrl}}/sliders/

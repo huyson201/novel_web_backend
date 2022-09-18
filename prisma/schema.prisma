@@ -42,11 +42,13 @@ model Book {
   author     String     @default("Đang cập nhật") @db.VarChar(100)
   translator String     @default("Đang cập nhật") @db.VarChar(100)
   state      String     @default("") @db.VarChar(100)
+  view       Int        @default(0)
   categories Category[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @default(now()) @updatedAt
   chapters   Chapter[]
-  Slider     Slider[]
+  slider     Slider?
+  recommend  Recommend?
 
   @@map("books")
 }
@@ -65,8 +67,18 @@ model Chapter {
 }
 
 model Slider {
-  id        Int    @id @default(autoincrement())
-  bookId    Int
-  book      Book   @relation(fields: [bookId], references: [id])
-  bannerImg String @default("")
+  id        Int      @id @default(autoincrement())
+  book      Book     @relation(fields: [bookId], references: [id])
+  bookId    Int      @unique
+  bannerImg String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Recommend {
+  id        Int      @id @default(autoincrement())
+  book      Book     @relation(fields: [bookId], references: [id])
+  bookId    Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

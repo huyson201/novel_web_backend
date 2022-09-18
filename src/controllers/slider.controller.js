@@ -8,6 +8,9 @@ const getAll = async (req, res, next) => {
                 book: {
                     select: { slug: true }
                 }
+            },
+            orderBy: {
+                updatedAt: 'desc'
             }
         })
         return res.status(200).json({

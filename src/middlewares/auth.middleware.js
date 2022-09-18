@@ -5,7 +5,6 @@ const authMiddleware = async (req, res, next) => {
     if (!email) return next(createHttpError(404, 'Email empty!'))
     try {
         let user = await prisma.user.findUnique({ where: { email } })
-        console.log(user)
         if (user) return next(createHttpError(409, 'Email exist!'))
         return next()
     } catch (error) {

@@ -1,33 +1,54 @@
-export const pagination = async (model, query, order, options, page = 1, limit = 10,) => {
-    let startIndex = (page - 1) * limit
+// import { bookPagination } from "~/middlewares/common"
+
+import prisma from "~/models"
+
+export const paginationFormat = async (data, total, startIndex, page = 1, perPage = 10,) => {
     let paginationData = {
         previous: {},
         next: {},
-        total: 0,
-        result: []
+        total: total,
+        result: data,
+        per_page: perPage
     }
 
     if (page > 1) {
-        paginationData.previous = { page: +page - 1, limit: limit }
+        paginationData.previous = { page: +page - 1 }
+    }
+    if (startIndex + perPage < paginationData.total) {
+        paginationData.next = { page: +page + 1 }
     }
 
-    try {
-        paginationData.total = await model.count({ where: query, orderBy: order })
-        if (startIndex + limit < paginationData.total) {
-            paginationData.next = { page: +page + 1, limit: limit }
-        }
 
-        paginationData.result = await model.findMany({
-            skip: startIndex,
-            take: limit,
-            where: query,
-            orderBy: order,
-            ...options
-        })
+    return paginationData
 
-        return paginationData
 
-    } catch (error) {
-        return Promise.reject(error)
-    }
 }
+
+export const bookPagination = async (page = 1, perPage = 10, order = 'desc', sort = 'updatedAt') => {
+    const startIndex = ((page - 1) * perPage) + 1
+    const totalBook = await prisma.book.count()
+    let books = await prisma.book.findMany({
+        include: {
+            categories: true,
+            chapters: {
+                orderBy: { chapterNumber: 'desc' },
+                take: 1,
+                select: {
+                    id: true,
+                    title: true,
+                    chapterNumber: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    bookId: true
+                }
+            }
+        },
+        skip: startIndex,
+        take: perPage,
+        orderBy: {
+            [sort]: order
+        }
+    })
+    return paginationFormat(books, totalBook, startIndex, page, perPage)
+
+} 
