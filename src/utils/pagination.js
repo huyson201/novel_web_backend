@@ -25,7 +25,7 @@ export const paginationFormat = async (data, total, startIndex, page = 1, perPag
 }
 
 export const bookPagination = async (page = 1, perPage = 10, order = 'desc', sort = 'updatedAt') => {
-    const startIndex = ((page - 1) * perPage) + 1
+    const startIndex = ((page - 1) * perPage)
     const totalBook = await prisma.book.count()
     let books = await prisma.book.findMany({
         include: {
@@ -51,4 +51,19 @@ export const bookPagination = async (page = 1, perPage = 10, order = 'desc', sor
     })
     return paginationFormat(books, totalBook, startIndex, page, perPage)
 
-} 
+}
+
+export const chapterPagination = async (bookId, page = 1, perPage = 10, order = 'asc', sort = 'chapterNumber') => {
+    const startIndex = ((page - 1) * perPage)
+    const total = await prisma.chapter.count({ where: { bookId } })
+    let chapters = await prisma.chapter.findMany({
+        where: { bookId: bookId },
+        skip: startIndex,
+        take: perPage,
+        orderBy: {
+            [sort]: order,
+        }
+    })
+
+    return paginationFormat(chapters, total, startIndex, page, perPage)
+}

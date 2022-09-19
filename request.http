@@ -52,6 +52,16 @@ Content-Type: application/json'
 GET {{apiUrl}}/books/popular
 Content-Type: application/json'
 
+
+### @name getFulledBooks
+GET {{apiUrl}}/books/full
+Content-Type: application/json'
+
+
 ### @name getSliders
 GET {{apiUrl}}/sliders/
 Content-Type: application/json
+
+### @name getChapter
+GET {{apiUrl}}/books/1/chapters
+Content-Type: application/json'

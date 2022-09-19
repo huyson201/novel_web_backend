@@ -1,4 +1,4 @@
 const route = require('express').Router()
-import categoryControllers from '~/controllers/category.controller'
-route.get('/', categoryControllers.getCategories)
+import { getAll } from '~/controllers/category.controller'
+route.get('/', getAll)
 export default route
