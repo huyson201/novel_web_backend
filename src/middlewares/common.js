@@ -1,5 +1,5 @@
 import createHttpError from "http-errors"
-import { bookPagination, chapterPagination } from "~/utils"
+import { bookPagination, chapterPagination, searchChapterPagination } from "~/utils"
 
 export const getAllsBookMiddleware = () => {
     return async (req, res, next) => {
@@ -15,9 +15,22 @@ export const getAllsBookMiddleware = () => {
 export const getChapterMiddleware = () => {
     return async (req, res, next) => {
         let { bookId } = req.params
-        let { page, limit, order, sort } = req.query
+        let { page, per_page, order, sort } = req.query
         try {
-            req.paginationResult = await chapterPagination(+bookId, page, limit, order, sort)
+            req.paginationResult = await chapterPagination(+bookId, page, per_page, order, sort)
+            return next()
+        } catch (error) {
+            return next(createHttpError(500, error.message))
+        }
+    }
+}
+
+export const getSearchChapterMiddleware = () => {
+    return async (req, res, next) => {
+        let { bookId } = req.params
+        let { q, page, per_page, order } = req.query
+        try {
+            req.paginationResult = await searchChapterPagination(bookId, q, page, per_page, order)
             return next()
         } catch (error) {
             return next(createHttpError(500, error.message))

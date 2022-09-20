@@ -65,3 +65,7 @@ Content-Type: application/json
 ### @name getChapter
 GET {{apiUrl}}/books/1/chapters
 Content-Type: application/json'
+
+### @name getSearchChapter
+GET {{apiUrl}}/books/1/chapters/search?q=a&page=1&order=asc
+Content-Type: application/json'

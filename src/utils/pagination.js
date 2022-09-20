@@ -1,5 +1,6 @@
 // import { bookPagination } from "~/middlewares/common"
 
+import { Prisma } from "@prisma/client"
 import prisma from "~/models"
 
 export const paginationFormat = async (data, total, startIndex, page = 1, perPage = 10,) => {
@@ -67,3 +68,29 @@ export const chapterPagination = async (bookId, page = 1, perPage = 10, order = 
 
     return paginationFormat(chapters, total, startIndex, page, perPage)
 }
+
+export const searchChapterPagination = async (bookId, searchKey, page = 1, perPage = 10, order = 'asc', sort = 'chapterNumber') => {
+    const startIndex = ((page - 1) * perPage)
+    const queryField = parseInt(searchKey) ? { chapterNumber: { equals: +searchKey } } : { title: { contains: searchKey } }
+    const query = {
+        bookId: +bookId,
+        ...queryField
+    }
+
+    const total = await prisma.chapter.count({
+        where: query
+    })
+
+    let chapters = await prisma.chapter.findMany({
+        where: query,
+        skip: startIndex,
+        take: perPage,
+        orderBy: {
+            [sort]: order,
+        },
+
+    })
+
+    return paginationFormat(chapters, total, startIndex, page, perPage)
+}
+
