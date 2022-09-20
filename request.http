@@ -69,3 +69,7 @@ Content-Type: application/json'
 ### @name getSearchChapter
 GET {{apiUrl}}/books/1/chapters/search?q=a&page=1&order=asc
 Content-Type: application/json'
+
+### @name getBookBySlug
+GET {{apiUrl}}/books/slug/ta-su-phu-moi-den-dai-nan-moi-dot-pha-ban-dich/chapter/203
+Content-Type: application/json

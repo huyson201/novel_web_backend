@@ -57,8 +57,8 @@ model Book {
 model Chapter {
   id            Int      @id @default(autoincrement())
   title         String   @db.VarChar(255)
-  chapterNumber Int
-  content       String   @default("")
+  chapterNumber Float
+  content       String   @default("") @db.Text
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now()) @updatedAt
   bookId        Int

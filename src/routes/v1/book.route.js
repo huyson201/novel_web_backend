@@ -11,4 +11,5 @@ route.get('/full', bookController.getFulledBooks)
 route.get('/:bookId/chapters', getChapterMiddleware(), getByBookId)
 route.get('/:bookId/chapters/search', getSearchChapterMiddleware(), getByBookId)
 route.get('/slug/:slug', bookController.getBookBySlug)
+route.get('/slug/:slug/chapter/:chapterId', bookController.getChapter)
 export default route

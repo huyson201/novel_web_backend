@@ -1,6 +1,6 @@
 import createHttpError from "http-errors"
 import prisma from "~/models"
-import { responseFormat } from "~/utils"
+import { createChapterResponse, responseFormat } from "~/utils"
 
 const getBooks = async (req, res, next) => {
     return res.status(200).json(responseFormat(req.paginationResult))
@@ -84,4 +84,18 @@ const getFulledBooks = async (req, res, next) => {
     }
 }
 
-export default { getBooks, getBookBySlug, getRecommends, getPopularBooks, getFulledBooks }
+const getChapter = async (req, res, next) => {
+    const { slug, chapterId } = req.params
+
+    try {
+        let chapter = await prisma.chapter.findFirst({ where: { id: +chapterId } })
+
+        let dataRes = await createChapterResponse(chapter)
+
+        return res.status(200).json(responseFormat(dataRes))
+    } catch (error) {
+        console.log(error)
+        return next(createHttpError(500, error.message))
+    }
+}
+export default { getBooks, getBookBySlug, getRecommends, getPopularBooks, getFulledBooks, getChapter }
