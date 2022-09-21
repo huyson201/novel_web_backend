@@ -49,7 +49,7 @@ GET {{apiUrl}}/books/recommends
 Content-Type: application/json'
 
 ### @name getBookPopular
-GET {{apiUrl}}/books/popular
+GET {{apiUrl}}/books/popular?limit=20
 Content-Type: application/json'
 
 
@@ -72,4 +72,8 @@ Content-Type: application/json'
 
 ### @name getBookBySlug
 GET {{apiUrl}}/books/slug/ta-su-phu-moi-den-dai-nan-moi-dot-pha-ban-dich/chapter/203
+Content-Type: application/json
+
+### @name getCategories
+GET  {{apiUrl}}/categories/chien-tranh/books
 Content-Type: application/json

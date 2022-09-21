@@ -10,3 +10,7 @@ export const getAll = async (req, res, next) => {
         return next(createHttpError(500, error.message))
     }
 }
+
+export const getBooksByCate = async (req, res, next) => {
+    return res.status(200).json(responseFormat(req.paginationResult))
+}

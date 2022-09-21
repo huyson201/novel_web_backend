@@ -46,7 +46,8 @@ const getRecommends = async (req, res, next) => {
 }
 
 const getPopularBooks = async (req, res, next) => {
-
+    let { limit } = req.query
+    if (!limit) limit = 10
     try {
         let books = await prisma.book.findMany({
             include: {
@@ -55,7 +56,7 @@ const getPopularBooks = async (req, res, next) => {
             orderBy: {
                 view: 'desc'
             },
-            take: 10
+            take: +limit
         })
 
         return res.status(200).json(responseFormat(books))
@@ -98,4 +99,6 @@ const getChapter = async (req, res, next) => {
         return next(createHttpError(500, error.message))
     }
 }
+
+
 export default { getBooks, getBookBySlug, getRecommends, getPopularBooks, getFulledBooks, getChapter }
