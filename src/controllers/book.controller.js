@@ -100,5 +100,32 @@ const getChapter = async (req, res, next) => {
     }
 }
 
+const searchBook = async (req, res, next) => {
+    const { q } = req.query
+    if (!q) return res.status(200).json(responseFormat([]))
 
-export default { getBooks, getBookBySlug, getRecommends, getPopularBooks, getFulledBooks, getChapter }
+    try {
+        let books = await prisma.book.findMany({
+            where: {
+                title: {
+                    search: q
+                }
+            },
+            select: {
+                id: true,
+                slug: true,
+                categories: true,
+                image: true,
+                title: true
+            }
+        })
+        return res.status(200).json(responseFormat(books))
+
+    } catch (error) {
+        console.log(error)
+        return next(createHttpError(500, error.message))
+    }
+}
+
+
+export default { getBooks, getBookBySlug, getRecommends, getPopularBooks, getFulledBooks, getChapter, searchBook }

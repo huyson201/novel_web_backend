@@ -51,6 +51,7 @@ model Book {
   slider     Slider?
   recommend  Recommend?
 
+  @@fulltext([title])
   @@map("books")
 }
 

@@ -77,3 +77,7 @@ Content-Type: application/json
 ### @name getCategories
 GET  {{apiUrl}}/categories/chien-tranh/books
 Content-Type: application/json
+
+### @name searchBook
+GET {{apiUrl}}/books/search?q=Ta Sư 
+Content-Type: application/json'
