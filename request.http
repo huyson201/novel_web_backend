@@ -35,6 +35,9 @@ Content-Type: application/json
 GET  {{apiUrl}}/auth/me/bookcase
 Content-Type: application/json
 
+### @name deleteBookcase
+DELETE {{apiUrl}}/auth/me/bookcase/delete?book_id=2
+Content-Type: application/json
 
 ### @name getCategories
 GET  {{apiUrl}}/categories

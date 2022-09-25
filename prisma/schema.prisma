@@ -96,5 +96,5 @@ model BookCase {
   book      Book    @relation(fields: [bookId], references: [id])
   chapter   Chapter @relation(fields: [chapterId], references: [id])
 
-  @@id([userId, bookId, chapterId])
+  @@id([userId, bookId])
 }

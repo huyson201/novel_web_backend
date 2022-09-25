@@ -76,9 +76,25 @@ const getBookcase = async (req, res, next) => {
         return next(createHttpError(500, error.message))
     }
 }
+
+const deleteBookcaseById = async (req, res, next) => {
+    let user = req.user
+    let { book_id } = req.query
+    try {
+        let data = await prisma.bookCase.delete({
+            where: {
+                userId_bookId: { userId: user.id, bookId: +book_id }
+            }
+        })
+        return res.status(200).json(responseFormat(data))
+    } catch (error) {
+        return next(createHttpError(500, error.message))
+    }
+}
 export default {
     register,
     login,
     logout,
-    getBookcase
+    getBookcase,
+    deleteBookcaseById
 }

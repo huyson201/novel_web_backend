@@ -12,4 +12,5 @@ route.get('/me', passport.authenticate('jwt', { session: false }), (req, res) =>
 })
 
 route.get('/me/bookcase', passport.authenticate('jwt', { session: false }), authController.getBookcase)
+route.delete('/me/bookcase/delete', passport.authenticate('jwt', { session: false }), authController.deleteBookcaseById)
 export default route
