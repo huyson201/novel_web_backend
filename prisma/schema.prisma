@@ -12,13 +12,14 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  uid       String   @unique @default(uuid())
-  name      String   @db.VarChar(250)
-  email     String   @unique
-  password  String   @db.VarChar(250)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int        @id @default(autoincrement())
+  uid       String     @unique @default(uuid())
+  name      String     @db.VarChar(250)
+  email     String     @unique
+  password  String     @db.VarChar(250)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  bookCase  BookCase[]
 
   @@map("users")
 }
@@ -50,20 +51,22 @@ model Book {
   chapters   Chapter[]
   slider     Slider?
   recommend  Recommend?
+  bookCase   BookCase[]
 
   @@fulltext([title])
   @@map("books")
 }
 
 model Chapter {
-  id            Int      @id @default(autoincrement())
-  title         String   @db.VarChar(255)
+  id            Int        @id @default(autoincrement())
+  title         String     @db.VarChar(255)
   chapterNumber Float
-  content       String   @default("") @db.Text
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now()) @updatedAt
+  content       String     @default("") @db.Text
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now()) @updatedAt
   bookId        Int
-  book          Book     @relation(fields: [bookId], references: [id])
+  book          Book       @relation(fields: [bookId], references: [id])
+  bookCase      BookCase[]
 
   @@map("chapters")
 }
@@ -83,4 +86,15 @@ model Recommend {
   bookId    Int      @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model BookCase {
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id])
+  bookId    Int
+  chapterId Int
+  book      Book    @relation(fields: [bookId], references: [id])
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
+
+  @@id([userId, bookId, chapterId])
 }

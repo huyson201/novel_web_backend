@@ -44,8 +44,41 @@ const logout = async (req, res, next) => {
     res.clearCookie('auth.refresh_token')
     return res.status(200).json(responseFormat(null))
 }
+
+const getBookcase = async (req, res, next) => {
+    let user = req.user
+    try {
+        let bookcase = await prisma.bookCase.findMany({
+            where: {
+                userId: user.id
+            },
+            select: {
+                book: {
+                    select: {
+                        id: true,
+                        image: true,
+                        title: true,
+                        slug: true
+                    }
+                },
+                chapter: {
+                    select: {
+                        id: true,
+                        title: true,
+                        chapterNumber: true
+                    }
+                }
+            }
+        })
+
+        return res.status(200).json(responseFormat(bookcase))
+    } catch (error) {
+        return next(createHttpError(500, error.message))
+    }
+}
 export default {
     register,
     login,
-    logout
+    logout,
+    getBookcase
 }

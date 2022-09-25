@@ -8,7 +8,7 @@ POST {{apiUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "huyson@gmail.com",
+    "email": "huyson201@gmail.com",
     "password": "asdasd"
 }
 
@@ -27,9 +27,14 @@ POST {{apiUrl}}/auth/logout
 Content-Type: application/json
 
 
-### @name me
+### @name getProfile
 GET  {{apiUrl}}/auth/me
 Content-Type: application/json
+
+### @name getBookcase
+GET  {{apiUrl}}/auth/me/bookcase
+Content-Type: application/json
+
 
 ### @name getCategories
 GET  {{apiUrl}}/categories
