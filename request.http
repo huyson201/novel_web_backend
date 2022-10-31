@@ -22,6 +22,11 @@ Content-Type: application/json
     "password": "asdasd"
 }
 
+
+### @name logout
+POST {{apiUrl}}/auth/refresh-token
+Content-Type: application/json
+
 ### @name logout
 POST {{apiUrl}}/auth/logout
 Content-Type: application/json
@@ -38,6 +43,22 @@ Content-Type: application/json
 ### @name deleteBookcase
 DELETE {{apiUrl}}/auth/me/bookcase/delete?book_id=2
 Content-Type: application/json
+
+### @name addBookcase
+POST  {{apiUrl}}/auth/me/bookcase/add
+Content-Type: application/json
+
+{
+   "book_id": 6,
+   "chapter_id": 4
+}
+
+### @name addBookcase
+GET  {{apiUrl}}/auth/me/bookcase/find/1
+Content-Type: application/json
+
+
+
 
 ### @name getCategories
 GET  {{apiUrl}}/categories

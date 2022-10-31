@@ -2,6 +2,8 @@ import prisma from '~/models'
 import createHttpError from 'http-errors'
 import bcrypt from 'bcrypt'
 import { generateAccessToken, generateRefreshToken, responseFormat } from '~/utils'
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 const register = async (req, res, next) => {
     const data = req.body
@@ -91,10 +93,72 @@ const deleteBookcaseById = async (req, res, next) => {
         return next(createHttpError(500, error.message))
     }
 }
+
+const addBookcase = async (req, res, next) => {
+    try {
+        const user = req.user
+        const { book_id, chapter_id } = req.body
+        let bookcase = await prisma.bookCase.upsert({
+            where: {
+                userId_bookId: { userId: user.id, bookId: +book_id }
+            },
+            update: {
+                chapterId: +chapter_id
+            },
+            create: {
+                userId: user.id,
+                bookId: +book_id,
+                chapterId: +chapter_id
+            }
+        })
+
+
+        return res.status(200).json(responseFormat(bookcase))
+    } catch (error) {
+        return next(createHttpError(500, error.message))
+    }
+}
+
+const getBookcaseById = async (req, res, next) => {
+    try {
+        const user = req.user
+        const { book_id } = req.params
+        let bookcase = await prisma.bookCase.findFirst({
+            where: {
+                userId: user.id,
+                bookId: +book_id
+            }
+        })
+
+        return res.status(200).json(responseFormat(bookcase))
+    } catch (error) {
+        return next(createHttpError(500, error.message))
+    }
+}
+const refreshToken = async (req, res, next) => {
+    const refresh_token = req.cookies['auth.refresh_token']
+    try {
+        let verify = jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET)
+        if (!verify) return next(createHttpError(401))
+        let token = generateAccessToken({
+            id: verify.id,
+            email: verify.email,
+            uid: verify.uid
+        })
+        res.cookie('auth.access_token', token)
+        return res.status(200).json({ message: 'success' })
+    } catch (error) {
+        console.log(error)
+        return next(createHttpError(500, error.message))
+    }
+}
 export default {
     register,
     login,
     logout,
     getBookcase,
-    deleteBookcaseById
+    deleteBookcaseById,
+    addBookcase,
+    getBookcaseById,
+    refreshToken
 }
