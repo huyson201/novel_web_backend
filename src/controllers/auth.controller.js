@@ -70,6 +70,9 @@ const getBookcase = async (req, res, next) => {
                         chapterNumber: true
                     }
                 }
+            },
+            orderBy: {
+                updatedAt: "desc"
             }
         })
 

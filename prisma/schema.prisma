@@ -90,11 +90,13 @@ model Recommend {
 
 model BookCase {
   userId    Int
-  user      User    @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   bookId    Int
   chapterId Int
-  book      Book    @relation(fields: [bookId], references: [id])
-  chapter   Chapter @relation(fields: [chapterId], references: [id])
+  book      Book     @relation(fields: [bookId], references: [id])
+  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@id([userId, bookId])
 }
