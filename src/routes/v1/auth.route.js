@@ -17,4 +17,7 @@ route.get('/me/bookcase', passport.authenticate('jwt', { session: false }), auth
 route.delete('/me/bookcase/delete', passport.authenticate('jwt', { session: false }), authController.deleteBookcaseById)
 route.post('/me/bookcase/add', passport.authenticate('jwt', { session: false }), authController.addBookcase)
 route.get('/me/bookcase/find/:book_id', passport.authenticate('jwt', { session: false }), authController.getBookcaseById)
+route.post('/me/update/name', passport.authenticate('jwt', { session: false }), authController.updateUsername)
+route.post('/me/update/password', passport.authenticate('jwt', { session: false }), authController.getBookcase)
+
 export default route

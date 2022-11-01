@@ -82,7 +82,7 @@ const getBookcase = async (req, res, next) => {
     }
 }
 
-const deleteBookcaseById = async (req, res, next) => {
+const deleteBookcaseById = async (req, user, next) => {
     let user = req.user
     let { book_id } = req.query
     try {
@@ -155,6 +155,29 @@ const refreshToken = async (req, res, next) => {
         return next(createHttpError(500, error.message))
     }
 }
+
+const updateUsername = async (req, res, next) => {
+    const currentUser = req.user
+    const { username } = req.body
+    if (!username || username === '') return next(createHttpError(404, 'Username not found!'))
+    try {
+        let updatedUser = await prisma.user.update({
+            where: {
+                id: currentUser.id,
+                uid: currentUser.uid
+            },
+            data: {
+                name: username
+            }
+        })
+
+        return res.status(200).json(
+            responseFormat({ ...updatedUser, password: undefined })
+        )
+    } catch (error) {
+        return next(createHttpError(500, error.message))
+    }
+}
 export default {
     register,
     login,
@@ -163,5 +186,6 @@ export default {
     deleteBookcaseById,
     addBookcase,
     getBookcaseById,
-    refreshToken
+    refreshToken,
+    updateUsername
 }
