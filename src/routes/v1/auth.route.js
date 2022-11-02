@@ -9,7 +9,6 @@ route.post('/logout', authController.logout)
 route.post('/refresh-token', authController.refreshToken)
 
 route.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log(req.user)
     return res.status(200).json(responseFormat(req.user))
 })
 

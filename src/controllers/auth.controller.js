@@ -82,7 +82,8 @@ const getBookcase = async (req, res, next) => {
     }
 }
 
-const deleteBookcaseById = async (req, user, next) => {
+
+const deleteBookcaseById = async (req, res, next) => {
     let user = req.user
     let { book_id } = req.query
     try {
@@ -114,8 +115,6 @@ const addBookcase = async (req, res, next) => {
                 chapterId: +chapter_id
             }
         })
-
-
         return res.status(200).json(responseFormat(bookcase))
     } catch (error) {
         return next(createHttpError(500, error.message))

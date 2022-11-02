@@ -2,7 +2,6 @@ const route = require('express').Router()
 import bookController from '~/controllers/book.controller'
 import { getByBookId } from '~/controllers/chapter.controller'
 import { getAllsBookMiddleware, getChapterMiddleware, getSearchChapterMiddleware } from '~/middlewares/common'
-import prisma from '~/models'
 
 route.get('/', getAllsBookMiddleware(), bookController.getBooks)
 route.get('/recommends', bookController.getRecommends)
