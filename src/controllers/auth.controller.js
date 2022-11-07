@@ -31,8 +31,8 @@ const login = async (req, res, next) => {
         let accessToken = generateAccessToken({ id: user.id, uid: user.uid, email: user.email })
         let refreshToken = generateRefreshToken({ id: user.id, uid: user.uid, email: user.email })
 
-        res.cookie('auth.access_token', accessToken)
-        res.cookie('auth.refresh_token', refreshToken)
+        res.cookie('auth.access_token', accessToken, { secure: true })
+        res.cookie('auth.refresh_token', refreshToken, { secure: true })
 
         return res.status(200).json(responseFormat({ ...user, password: undefined }))
     } catch (error) {
@@ -147,7 +147,7 @@ const refreshToken = async (req, res, next) => {
             email: verify.email,
             uid: verify.uid
         })
-        res.cookie('auth.access_token', token)
+        res.cookie('auth.access_token', token, { secure: true })
         return res.status(200).json({ message: 'success' })
     } catch (error) {
         console.log(error)
@@ -157,12 +157,12 @@ const refreshToken = async (req, res, next) => {
 
 const updateUsername = async (req, res, next) => {
     const currentUser = req.user
+    console.log(currentUser)
     const { username } = req.body
     if (!username || username === '') return next(createHttpError(404, 'Username not found!'))
     try {
         let updatedUser = await prisma.user.update({
             where: {
-                id: currentUser.id,
                 uid: currentUser.uid
             },
             data: {
@@ -174,6 +174,7 @@ const updateUsername = async (req, res, next) => {
             responseFormat({ ...updatedUser, password: undefined })
         )
     } catch (error) {
+        console.log(error)
         return next(createHttpError(500, error.message))
     }
 }

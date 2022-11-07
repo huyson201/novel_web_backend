@@ -5,10 +5,14 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import passport from 'passport';
 import './passport'
+
+const hostList = process.env.OPEN_COR_HOST ? process.env.OPEN_COR_HOST.split('|') : 'http://localhost:3000'
+
+
 const serverConfig = (app) => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
-    app.use(cors({ origin: "http://localhost:3000", credentials: true }))
+    app.use(cors({ origin: hostList, credentials: true }))
     app.use(morgan('dev'));
     app.use(cookieParser())
     app.use(passport.initialize())
