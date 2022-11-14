@@ -178,6 +178,34 @@ const updateUsername = async (req, res, next) => {
         return next(createHttpError(500, error.message))
     }
 }
+
+
+const changePasswd = async (req, res, next) => {
+    const user = req.user
+    const { oldPassword, newPassword, confirmPassword } = req.body
+    if (newPassword !== confirmPassword) return next(createHttpError(401, "Confirm password not match!"))
+
+    try {
+        let checkPassword = bcrypt.compare(oldPassword, user.password)
+        if (!checkPassword) return next(createHttpError(401, "Password invalid"))
+
+        let hashNewPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10))
+        await prisma.user.update({
+            where: {
+                uid: user.uid
+            },
+            data: {
+                password: hashNewPassword
+            }
+        })
+
+        return res.status(200).json(responseFormat({}, 200, "updated"))
+    } catch (error) {
+        console.log(error)
+        return next(createHttpError(500, error.message))
+    }
+
+}
 export default {
     register,
     login,
@@ -187,5 +215,6 @@ export default {
     addBookcase,
     getBookcaseById,
     refreshToken,
-    updateUsername
+    updateUsername,
+    changePasswd
 }

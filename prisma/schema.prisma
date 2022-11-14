@@ -52,6 +52,7 @@ model Book {
   slider     Slider?
   recommend  Recommend?
   bookCase   BookCase[]
+  vip        Int        @default(0)
 
   @@fulltext([title])
   @@map("books")
