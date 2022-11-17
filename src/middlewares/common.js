@@ -52,3 +52,21 @@ export const getBooksByCateMiddleware = () => {
         }
     }
 }
+
+
+export const createValidateRequest = (validator, errorCode = 500) => {
+    return async (req, res, next) => {
+        try {
+            await validator(req.body)
+            return next();
+        } catch (errors) {
+            const createError = {}
+            errors.details.forEach(error => {
+                createError[error.context.key] = error.message.replaceAll("\"", "")
+            })
+
+            return next(createHttpError(errorCode, JSON.stringify(createError)))
+        }
+
+    }
+}

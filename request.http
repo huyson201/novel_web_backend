@@ -8,8 +8,8 @@ POST {{apiUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "huyson201@gmail.com",
-    "password": "asdasd"
+    "email": "huyson201",
+    "password": ""
 }
 
 ### @name register
@@ -17,7 +17,7 @@ POST {{apiUrl}}/auth/register
 Content-Type: application/json
 
 {
-    "name": "huyson",
+    "name": "",
     "email": "huyson@gmail.com",
     "password": "asdasd"
 }

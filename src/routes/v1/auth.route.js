@@ -1,11 +1,17 @@
 const route = require('express').Router()
+import createHttpError from 'http-errors'
 import passport from 'passport'
 import authController from '~/controllers/auth.controller'
 import authMiddleware from '~/middlewares/auth.middleware'
+import { createValidateRequest } from '~/middlewares/common'
 import { responseFormat } from '~/utils'
-route.post('/login', authController.login)
-route.post('/register', authMiddleware, authController.register)
+import { loginValidator, registerValidator } from '~/validations'
+
+
+route.post('/login', createValidateRequest(loginValidator, 401), authController.login)
+route.post('/register', createValidateRequest(registerValidator, 401), authController.register)
 route.post('/logout', authController.logout)
+
 route.post('/refresh-token', authController.refreshToken)
 
 route.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {

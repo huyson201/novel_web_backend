@@ -18,9 +18,21 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    status: err.status || 500,
+  const code = err.status || 500
+  res.status(code);
+  const errors = JSON.parse(err.message) || null
+
+  if (errors !== null) {
+    return res.json({
+      success: false,
+      status: code,
+      errors
+    })
+  }
+
+  return res.json({
+    success: false,
+    status: code,
     message: err.message,
   });
 });
