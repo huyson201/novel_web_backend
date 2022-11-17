@@ -38,6 +38,7 @@ export const getSearchChapterMiddleware = () => {
     }
 }
 
+
 export const getBooksByCateMiddleware = () => {
     return async (req, res, next) => {
         const { cateSlug } = req.params
@@ -60,12 +61,12 @@ export const createValidateRequest = (validator, errorCode = 500) => {
             await validator(req.body)
             return next();
         } catch (errors) {
-            const createError = {}
-            errors.details.forEach(error => {
-                createError[error.context.key] = error.message.replaceAll("\"", "")
-            })
+            // const createError = {}
+            // errors.details.forEach(error => {
+            //     createError[error.context.key] = error.message.replaceAll("\"", "")
+            // })
 
-            return next(createHttpError(errorCode, JSON.stringify(createError)))
+            return next(createHttpError(errorCode, errors.details[0].message.replaceAll("\"", "")))
         }
 
     }
