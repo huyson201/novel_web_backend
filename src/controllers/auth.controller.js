@@ -1,9 +1,14 @@
 import prisma from '~/models'
 import createHttpError from 'http-errors'
 import bcrypt from 'bcrypt'
-import { generateAccessToken, generateRefreshToken, responseFormat } from '~/utils'
+import { createToken, generateAccessToken, responseFormat } from '~/utils'
 import jwt from 'jsonwebtoken'
+import redisClient from '~/databases/int.redis'
 import 'dotenv/config'
+
+const getProfile = (req, res) => {
+    return res.status(200).json(responseFormat({ ...req.user, password: undefined }))
+}
 
 const register = async (req, res, next) => {
     const data = req.body
@@ -28,12 +33,14 @@ const login = async (req, res, next) => {
         const compare = bcrypt.compareSync(password, user.password)
         if (!compare) return next(createHttpError(401, 'Email / Password invalid'))
 
-        let accessToken = generateAccessToken({ id: user.id, uid: user.uid, email: user.email })
-        let refreshToken = generateRefreshToken({ id: user.id, uid: user.uid, email: user.email })
 
-        res.cookie('auth.access_token', accessToken, { secure: true })
-        res.cookie('auth.refresh_token', refreshToken, { secure: true })
+        let { access_token, refresh_token } = createToken({ id: user.id, uid: user.uid, email: user.email })
 
+        res.cookie('auth.access_token', access_token)
+        res.cookie('auth.refresh_token', refresh_token)
+
+        // add refresh token to redis
+        redisClient.set(`user::${user.id}-${user.uid}`, refresh_token, "EX", process.env.SAVED_TOKEN_TIME || 60 * 60 * 24)
         return res.status(200).json(responseFormat({ ...user, password: undefined }))
     } catch (error) {
         return next(createHttpError(500, error.message))
@@ -42,6 +49,7 @@ const login = async (req, res, next) => {
 }
 
 const logout = async (req, res, next) => {
+    redisClient.del(`user::${req.user.id}-${req.user.uid}`)
     res.clearCookie('auth.access_token')
     res.clearCookie('auth.refresh_token')
     return res.status(200).json(responseFormat(null))
@@ -137,18 +145,30 @@ const getBookcaseById = async (req, res, next) => {
         return next(createHttpError(500, error.message))
     }
 }
+
 const refreshToken = async (req, res, next) => {
-    const refresh_token = req.cookies['auth.refresh_token']
+    const refreshToken = req.cookies['auth.refresh_token']
+
     try {
-        let verify = jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET)
+        let verify = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
         if (!verify) return next(createHttpError(401))
-        let token = generateAccessToken({
+
+        let savedToken = await redisClient.get(`user::${verify.id}-${verify.uid}`)
+
+
+        if (!savedToken || savedToken != refreshToken) return next(createHttpError(401, "user do not login"))
+
+        let { access_token, refresh_token } = createToken({
             id: verify.id,
             email: verify.email,
             uid: verify.uid
         })
-        res.cookie('auth.access_token', token, { secure: true })
+
+        redisClient.set(`user::${verify.id}-${verify.uid}`, refresh_token, "EX", process.env.SAVED_TOKEN_TIME || 365 * 24 * 60 * 60)
+        res.cookie('auth.access_token', access_token)
+        res.cookie('auth.refresh_token', refresh_token)
         return res.status(200).json({ message: 'success' })
+
     } catch (error) {
         console.log(error)
         return next(createHttpError(500, error.message))
@@ -157,8 +177,8 @@ const refreshToken = async (req, res, next) => {
 
 const updateUsername = async (req, res, next) => {
     const currentUser = req.user
-    console.log(currentUser)
     const { username } = req.body
+
     if (!username || username === '') return next(createHttpError(404, 'Username not found!'))
     try {
         let updatedUser = await prisma.user.update({
@@ -217,5 +237,6 @@ export default {
     getBookcaseById,
     refreshToken,
     updateUsername,
-    changePasswd
+    changePasswd,
+    getProfile
 }

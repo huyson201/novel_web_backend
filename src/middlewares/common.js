@@ -55,10 +55,10 @@ export const getBooksByCateMiddleware = () => {
 }
 
 
-export const createValidateRequest = (validator, errorCode = 500) => {
+export const createValidateRequest = (validator, validateType = "body", errorCode = 500) => {
     return async (req, res, next) => {
         try {
-            await validator(req.body)
+            await validator(req[validateType])
             return next();
         } catch (errors) {
             // const createError = {}

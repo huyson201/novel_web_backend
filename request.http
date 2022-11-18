@@ -8,8 +8,8 @@ POST {{apiUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "huyson201",
-    "password": ""
+    "email": "huyson201@gmail.com",
+    "password": "asdasd123"
 }
 
 ### @name register
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 
-### @name logout
+### @name refresh
 POST {{apiUrl}}/auth/refresh-token
 Content-Type: application/json
 

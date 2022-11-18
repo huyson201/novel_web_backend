@@ -9,3 +9,13 @@ export const generateRefreshToken = (payload) => {
     let token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET)
     return token
 }
+
+
+export const createToken = (payload) => {
+    const access_token = generateAccessToken(payload)
+    const refresh_token = generateRefreshToken(payload)
+    return {
+        access_token,
+        refresh_token
+    }
+}
