@@ -62,3 +62,8 @@ const getNextChapter = async (bookId, chapterNumber) => {
 
     return nextChapter.length > 0 ? nextChapter[0] : null
 }
+
+
+export const parseDataFromString = (strData) => {
+    return JSON.parse(strData) || null
+}

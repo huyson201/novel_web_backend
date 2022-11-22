@@ -1,21 +1,32 @@
 import createHttpError from "http-errors"
-import { bookPagination, chapterPagination, getBooksByCatePagination, searchChapterPagination } from "~/utils"
+import redisClient from "~/databases/int.redis"
+import { bookPagination, chapterPagination, getBooksByCatePagination, parseDataFromString, searchChapterPagination } from "~/utils"
 
 export const getAllsBookMiddleware = () => {
     return async (req, res, next) => {
         let { page, limit, order, sort } = req.query
         try {
+            let cache = await redisClient.get(`allBooks::${page}`)
+            cache = parseDataFromString(cache)
+            if (cache) {
+                req.paginationResult = cache
+                return next()
+            }
+
             req.paginationResult = await bookPagination(page, limit, order, sort)
+            redisClient.set(`allBooks::${page}`, JSON.stringify(req.paginationResult), 'EX', 5 * 60)
             return next()
         } catch (error) {
             return next(createHttpError(500, error.message))
         }
     }
 }
+
 export const getChapterMiddleware = () => {
     return async (req, res, next) => {
         let { bookId } = req.params
         let { page, per_page, order, sort } = req.query
+
         try {
             req.paginationResult = await chapterPagination(+bookId, page, per_page, order, sort)
             return next()
@@ -45,7 +56,19 @@ export const getBooksByCateMiddleware = () => {
         let { page, per_page, order, sort } = req.query
 
         try {
+            let cache = await redisClient.get(`cate::${cateSlug}::books::${page}`)
+
+            cache = parseDataFromString(cache)
+
+            if (cache) {
+                req.paginationResult = cache
+                return next()
+            }
+
             req.paginationResult = await getBooksByCatePagination(cateSlug, page, per_page, order, sort)
+
+            redisClient.set(`cate::${cateSlug}::books::${page}`, JSON.stringify(req.paginationResult), 'EX', 6 * 50)
+
             return next()
         } catch (error) {
             console.log(error)

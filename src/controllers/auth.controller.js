@@ -189,7 +189,7 @@ const updateUsername = async (req, res, next) => {
                 name: username
             }
         })
-
+        redisClient.set(`profile::${updatedUser.id}-${updatedUser.uid}`, JSON.stringify(updatedUser), 'EX', 60 * 5)
         return res.status(200).json(
             responseFormat({ ...updatedUser, password: undefined })
         )
@@ -210,7 +210,8 @@ const changePasswd = async (req, res, next) => {
         if (!checkPassword) return next(createHttpError(401, "Password invalid"))
 
         let hashNewPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10))
-        await prisma.user.update({
+
+        let updatedUser = await prisma.user.update({
             where: {
                 uid: user.uid
             },
@@ -218,6 +219,8 @@ const changePasswd = async (req, res, next) => {
                 password: hashNewPassword
             }
         })
+
+        redisClient.set(`profile::${updatedUser.id}-${updatedUser.uid}`, JSON.stringify(updatedUser), 'EX', 60 * 5)
 
         return res.status(200).json(responseFormat({}, 200, "updated"))
     } catch (error) {

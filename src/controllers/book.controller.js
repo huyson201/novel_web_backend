@@ -1,19 +1,28 @@
 import createHttpError from "http-errors"
+import redisClient from "~/databases/int.redis"
 import prisma from "~/models"
-import { createChapterResponse, responseFormat } from "~/utils"
+import { createChapterResponse, parseDataFromString, responseFormat } from "~/utils"
 
-const getBooks = async (req, res, next) => {
+const getBooks = async (req, res) => {
     return res.status(200).json(responseFormat(req.paginationResult))
 }
 const getBookBySlug = async (req, res, next) => {
     try {
         let { slug } = req.params
+
+        let cache = await redisClient.get(`book::${slug}`);
+        cache = parseDataFromString(cache)
+        if (cache) return res.status(200).json(responseFormat(cache))
+
         let book = await prisma.book.findUnique({
             where: { slug },
             include: {
                 categories: true
             }
         })
+
+        redisClient.set(`book::${slug}`, JSON.stringify(book), 'EX', 6 * 50)
+
         return res.status(200).json(responseFormat(book))
     } catch (error) {
         return next(createHttpError(500, error.message))
@@ -23,6 +32,10 @@ const getBookBySlug = async (req, res, next) => {
 const getRecommends = async (req, res, next) => {
 
     try {
+        let cache = await redisClient.get("recommends");
+        cache = parseDataFromString(cache)
+        if (cache) return res.status(200).json(responseFormat(cache))
+
         let books = await prisma.recommend.findMany({
             select: {
                 book: {
@@ -39,6 +52,8 @@ const getRecommends = async (req, res, next) => {
         books = books.map(value => {
             return value.book
         })
+
+        redisClient.set("recommends", JSON.stringify(books), 'EX', 5 * 60)
         return res.status(200).json(responseFormat(books))
     } catch (error) {
         return next(createHttpError(500, error.message))
@@ -46,9 +61,15 @@ const getRecommends = async (req, res, next) => {
 }
 
 const getPopularBooks = async (req, res, next) => {
+
     let { limit } = req.query
     if (!limit) limit = 10
     try {
+
+        let cache = await redisClient.get(`popular::${limit}`);
+        cache = parseDataFromString(cache)
+        if (cache) return res.status(200).json(responseFormat(cache))
+
         let books = await prisma.book.findMany({
             include: {
                 categories: true
@@ -59,7 +80,9 @@ const getPopularBooks = async (req, res, next) => {
             take: +limit
         })
 
+        redisClient.set(`popular::${limit}`, JSON.stringify(books), 'EX', 6 * 50)
         return res.status(200).json(responseFormat(books))
+
     } catch (error) {
         return next(createHttpError(500, error.message))
     }
@@ -67,6 +90,10 @@ const getPopularBooks = async (req, res, next) => {
 
 const getFulledBooks = async (req, res, next) => {
     try {
+        let cache = await redisClient.get(`full-book`);
+        cache = parseDataFromString(cache)
+        if (cache) return res.status(200).json(responseFormat(cache))
+
         let books = await prisma.book.findMany({
             where: {
                 state: 'full'
@@ -79,6 +106,9 @@ const getFulledBooks = async (req, res, next) => {
             },
             take: 6
         })
+
+        redisClient.set(`full-book`, JSON.stringify(books), 'EX', 6 * 50)
+
         return res.status(200).json(responseFormat(books))
     } catch (error) {
         return next(createHttpError(500, error.message))
@@ -86,12 +116,19 @@ const getFulledBooks = async (req, res, next) => {
 }
 
 const getChapter = async (req, res, next) => {
-    const { slug, chapterId } = req.params
+    const { chapterId } = req.params
 
     try {
+        let cache = await redisClient.get(`chapter::${chapterId}`);
+        cache = parseDataFromString(cache)
+        if (cache) return res.status(200).json(responseFormat(cache))
+
+
         let chapter = await prisma.chapter.findFirst({ where: { id: +chapterId } })
 
         let dataRes = await createChapterResponse(chapter)
+
+        redisClient.set(`chapter::${chapterId}`, JSON.stringify(dataRes), 'EX', 6 * 50)
 
         return res.status(200).json(responseFormat(dataRes))
     } catch (error) {
