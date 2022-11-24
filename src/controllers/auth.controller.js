@@ -1,7 +1,7 @@
 import prisma from '~/models'
 import createHttpError from 'http-errors'
 import bcrypt from 'bcrypt'
-import { createToken, generateAccessToken, responseFormat } from '~/utils'
+import { createToken, responseFormat } from '~/utils'
 import jwt from 'jsonwebtoken'
 import redisClient from '~/databases/int.redis'
 import 'dotenv/config'
@@ -36,8 +36,8 @@ const login = async (req, res, next) => {
 
         let { access_token, refresh_token } = createToken({ id: user.id, uid: user.uid, email: user.email })
 
-        res.cookie('auth.access_token', access_token)
-        res.cookie('auth.refresh_token', refresh_token)
+        res.cookie('auth.access_token', access_token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 365 * 20 })
+        res.cookie('auth.refresh_token', refresh_token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 365 * 20 })
 
         // add refresh token to redis
         redisClient.set(`user::${user.id}-${user.uid}`, refresh_token, "EX", process.env.SAVED_TOKEN_TIME || 60 * 60 * 24)
