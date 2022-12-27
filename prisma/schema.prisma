@@ -79,6 +79,8 @@ model Slider {
   bannerImg String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("slider")
 }
 
 model Recommend {
@@ -87,6 +89,8 @@ model Recommend {
   bookId    Int      @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("recommend")
 }
 
 model BookCase {
@@ -100,4 +104,5 @@ model BookCase {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@id([userId, bookId])
+  @@map("bookcase")
 }
