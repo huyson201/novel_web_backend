@@ -164,5 +164,34 @@ const searchBook = async (req, res, next) => {
     }
 }
 
+const incrementView = async (req, res, next) => {
+    const userIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+    const bookId = req.params.bookId
+    const key = `${userIp}-${bookId}::views`
+    console.log(userIp)
+    console.log(bookId);
 
-export default { getBooks, getBookBySlug, getRecommends, getPopularBooks, getFulledBooks, getChapter, searchBook }
+    try {
+        let isOk = await redisClient.set(key, 'viewed', 'NX', 'EX', 5 * 60)
+        if (isOk) {
+            console.log('increased view');
+
+            await prisma.book.update({
+                where: {
+                    id: +bookId
+                },
+                data: {
+                    view: { increment: 1 }
+                }
+            })
+        }
+        return res.status(200).json(responseFormat(null, 200, "updated"))
+    } catch (error) {
+        console.log(error)
+        return next(createHttpError(500, error.message))
+    }
+
+
+}
+
+export default { getBooks, getBookBySlug, getRecommends, getPopularBooks, getFulledBooks, getChapter, searchBook, incrementView }

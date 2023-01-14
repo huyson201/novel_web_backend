@@ -110,3 +110,6 @@ Content-Type: application/json
 ### @name searchBook
 GET {{apiUrl}}/books/search?q=Ta Sư 
 Content-Type: application/json'
+
+### @name increaseView
+PUT {{apiUrl}}/books/1/view/increase

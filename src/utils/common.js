@@ -67,3 +67,9 @@ const getNextChapter = async (bookId, chapterNumber) => {
 export const parseDataFromString = (strData) => {
     return JSON.parse(strData) || null
 }
+
+export const randomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}

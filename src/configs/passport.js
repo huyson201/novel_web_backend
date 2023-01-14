@@ -3,7 +3,7 @@ import { Strategy as JwtStrategy } from 'passport-jwt'
 import 'dotenv/config'
 import prisma from '~/models';
 import redisClient from '~/databases/int.redis';
-import { parseDataFromString } from '~/utils';
+import { parseDataFromString, randomInt } from '~/utils';
 const opts = {}
 const cookieExtractor = function (req) {
     var token = null;
@@ -28,7 +28,7 @@ passport.use(new JwtStrategy(opts, async function (jwt_payload, done) {
 
         if (!user) return done(null, false);
 
-        redisClient.set(`profile::${user.id}-${user.uid}`, JSON.stringify(user), 'EX', 60 * 5)
+        redisClient.set(`profile::${user.id}-${user.uid}`, JSON.stringify(user), 'EX', 60 * 5 + randomInt(1, 10) * 10)
 
         return done(null, { ...user });
     } catch (error) {

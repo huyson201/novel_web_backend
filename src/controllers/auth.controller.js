@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt'
 import { createToken, responseFormat } from '~/utils'
 import jwt from 'jsonwebtoken'
 import redisClient from '~/databases/int.redis'
+import { randomInt } from '~/utils';
+
 import 'dotenv/config'
 
 const getProfile = (req, res) => {
@@ -189,7 +191,7 @@ const updateUsername = async (req, res, next) => {
                 name: username
             }
         })
-        redisClient.set(`profile::${updatedUser.id}-${updatedUser.uid}`, JSON.stringify(updatedUser), 'EX', 60 * 5)
+        redisClient.set(`profile::${updatedUser.id}-${updatedUser.uid}`, JSON.stringify(updatedUser), 'EX', 60 * 5 + randomInt(1, 10) * 10)
         return res.status(200).json(
             responseFormat({ ...updatedUser, password: undefined })
         )
@@ -220,7 +222,7 @@ const changePasswd = async (req, res, next) => {
             }
         })
 
-        redisClient.set(`profile::${updatedUser.id}-${updatedUser.uid}`, JSON.stringify(updatedUser), 'EX', 60 * 5)
+        redisClient.set(`profile::${updatedUser.id}-${updatedUser.uid}`, JSON.stringify(updatedUser), 'EX', 60 * 5 + randomInt(1, 10) * 10)
 
         return res.status(200).json(responseFormat({}, 200, "updated"))
     } catch (error) {

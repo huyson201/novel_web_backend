@@ -1,5 +1,5 @@
 import redisClient from "~/databases/int.redis"
-import { parseDataFromString, responseFormat } from "~/utils"
+import { parseDataFromString, randomInt, responseFormat } from "~/utils"
 
 const createHttpError = require("http-errors")
 const { default: prisma } = require("~/models")
@@ -22,7 +22,7 @@ const getAll = async (req, res, next) => {
             }
         })
 
-        redisClient.set("sliders", JSON.stringify(sliders), 'EX', 60 * 5)
+        redisClient.set("sliders", JSON.stringify(sliders), 'EX', 60 * 5 + randomInt(1, 10) * 10)
 
         return res.status(200).json(responseFormat(sliders))
     } catch (error) {
