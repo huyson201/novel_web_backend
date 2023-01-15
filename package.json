@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node ./build/src/app.js",
+    "start": "yarn run build && node ./build/src/app.js",
     "dev": "nodemon --exec babel-node ./src/app.js",
     "build": "babel ./src -d ./build/src"
   },

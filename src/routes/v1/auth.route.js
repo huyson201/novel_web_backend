@@ -1,6 +1,7 @@
 const route = require('express').Router()
 import passport from 'passport'
 import authController from '~/controllers/auth.controller'
+import authMiddleware from '~/middlewares/auth.middleware'
 import { createValidateRequest } from '~/middlewares/common'
 import {
     bookcaseValidators,
@@ -16,6 +17,7 @@ route.post('/login',
 
 route.post('/register',
     createValidateRequest(authRequestValidators.registerValidator, 401),
+    authMiddleware,
     authController.register
 )
 

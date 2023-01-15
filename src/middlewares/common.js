@@ -84,11 +84,6 @@ export const createValidateRequest = (validator, validateType = "body", errorCod
             await validator(req[validateType])
             return next();
         } catch (errors) {
-            // const createError = {}
-            // errors.details.forEach(error => {
-            //     createError[error.context.key] = error.message.replaceAll("\"", "")
-            // })
-
             return next(createHttpError(errorCode, errors.details[0].message.replaceAll("\"", "")))
         }
 
