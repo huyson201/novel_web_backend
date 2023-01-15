@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/src/app.js",
     "dev": "nodemon --exec babel-node ./src/app.js",
-    "build": "babel ./src -d ./dist/src"
+    "babel-build": "babel ./src -d ./dist/src"
   },
   "keywords": [],
   "author": "",
