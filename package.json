@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": ".build/src/app.js",
   "scripts": {
     "start": "node ./build/src/app.js",
     "dev": "nodemon --exec babel-node ./src/app.js",
