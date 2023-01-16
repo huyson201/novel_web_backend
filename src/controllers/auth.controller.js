@@ -39,7 +39,7 @@ const login = async (req, res, next) => {
         let { access_token, refresh_token } = createToken({ id: user.id, uid: user.uid, email: user.email })
 
         let savedAge = process.env.SAVED_TOKEN_TIME || 1000 * 60 * 60 * 24 * 365 * 20
-        res.cookie('auth.access_token', access_token, { httpOnly: true, maxAge: savedAge })
+        res.cookie('auth.access_token', access_token, { httpOnly: true, maxAge: savedAge, sameSite: 'none', secure: process.env.NODE_ENV === 'development' ? false : true })
         res.cookie('auth.refresh_token', refresh_token, { httpOnly: true, maxAge: savedAge, sameSite: 'none', secure: process.env.NODE_ENV === 'development' ? false : true })
 
         // add refresh token to redis
@@ -168,8 +168,12 @@ const refreshToken = async (req, res, next) => {
         })
 
         redisClient.set(`user::${verify.id}-${verify.uid}`, refresh_token, "EX", process.env.SAVED_TOKEN_TIME || 365 * 24 * 60 * 60)
-        res.cookie('auth.access_token', access_token)
-        res.cookie('auth.refresh_token', refresh_token)
+
+        let savedAge = process.env.SAVED_TOKEN_TIME || 1000 * 60 * 60 * 24 * 365 * 20
+        res.cookie('auth.access_token', access_token, { httpOnly: true, maxAge: savedAge, sameSite: 'none', secure: process.env.NODE_ENV === 'development' ? false : true })
+        res.cookie('auth.refresh_token', refresh_token, { httpOnly: true, maxAge: savedAge, sameSite: 'none', secure: process.env.NODE_ENV === 'development' ? false : true })
+
+
         return res.status(200).json({ message: 'success' })
 
     } catch (error) {
