@@ -39,8 +39,8 @@ const login = async (req, res, next) => {
         let { access_token, refresh_token } = createToken({ id: user.id, uid: user.uid, email: user.email })
 
         let savedAge = process.env.SAVED_TOKEN_TIME || 1000 * 60 * 60 * 24 * 365 * 20
-        res.cookie('auth.access_token', access_token, { httpOnly: true, maxAge: savedAge, secure: process.env.NODE_ENV === 'development' ? false : true })
-        res.cookie('auth.refresh_token', refresh_token, { httpOnly: true, maxAge: savedAge, secure: process.env.NODE_ENV === 'development' ? false : true })
+        res.cookie('auth.access_token', access_token, { httpOnly: true, maxAge: savedAge })
+        res.cookie('auth.refresh_token', refresh_token, { httpOnly: true, maxAge: savedAge })
 
         // add refresh token to redis
         redisClient.set(`user::${user.id}-${user.uid}`, refresh_token, "EX", savedAge / 1000)
